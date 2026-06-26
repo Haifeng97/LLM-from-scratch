@@ -6,7 +6,8 @@ import torch.nn.functional as F
 n_embd = 32
 vocab_size = 512
 block_size = 16
-learning_rate = 1e-5
+# learning_rate = 1e-2
+learning_rate = 3e-3
 max_iters = 1000
 torch.manual_seed(1337)
 batch_size = 16
