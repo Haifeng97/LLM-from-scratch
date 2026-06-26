@@ -116,6 +116,7 @@ class BigramLanguageModel(nn.Module):
 
             # 按概率采样下一个 token
             idx_next = torch.multinomial(probs, num_samples=1)
+            # idx_next = torch.argmax(probs, dim=1, keepdim=True)
             # shape: [B, 1]
 
             # 拼回原序列
@@ -152,8 +153,19 @@ for step in range(max_iters):
 # 7. 生成文本
 # =====================
 
-context = torch.zeros((1, 1), dtype=torch.long, device=device)
-generated = model.generate(context, max_new_tokens=100)
+# context = torch.zeros((1, 1), dtype=torch.long, device=device)
+# generated = model.generate(context, max_new_tokens=100)
+#
+# print("------ generated text ------")
+# print(decode(generated[0].tolist()))
 
-print("------ generated text ------")
-print(decode(generated[0].tolist()))
+context = torch.tensor([encode(i) for i in ['我', '今', '天', '喜']], dtype=torch.long, device=device)
+
+
+generated = model.generate(context, max_new_tokens=200)
+# print([f'{decode(i.tolist())}\n' for i in generated])
+
+print(
+    *[f'{decode(i.tolist())}\n' for i in generated],
+    sep="-------------------------\n"
+)
