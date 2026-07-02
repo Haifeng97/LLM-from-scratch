@@ -108,7 +108,7 @@ class RotaryEmbedding(nn.Module):
         super().__init__()
 
         if head_size % 2 != 0:
-            raise ValueError("RoPE needs head_size to be odd")
+            raise ValueError("RoPE needs head_size to be even")
 
         # assume head_size = 8,
         # arange(0, 8, 2) = [0, 2, 4, 6]
@@ -202,7 +202,7 @@ class MultiHeadAttention(nn.Module):
 
         if self.head_size % 2 != 0:
             raise ValueError(
-                "Using Rope, needs head_size to be odd"
+                "Using Rope, needs head_size to be even"
             )
 
         self.qkv_proj = nn.Linear(
@@ -240,7 +240,7 @@ class MultiHeadAttention(nn.Module):
 
         if T > self.block_size:
             raise ValueError(
-                f"series length T = {T} > block_size = {block_size}"
+                f"series length T = {T} > block_size = {self.block_size}"
             )
 
         qkv = self.qkv_proj(x)
