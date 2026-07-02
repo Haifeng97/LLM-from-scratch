@@ -390,6 +390,7 @@ class FeedForward(nn.Module):
         hidden = gate * up
 
         out = self.down_proj(hidden)
+        out = self.dropout(out)
 
         return out
 
