@@ -108,7 +108,7 @@ class RotaryEmbedding(nn.Module):
         super().__init__()
 
         if head_size % 2 != 0:
-            raise ValueError("RoPE needs head_size to be even")
+            raise ValueError("RoPE needs head_size to be odd")
 
         # assume head_size = 8,
         # arange(0, 8, 2) = [0, 2, 4, 6]
@@ -267,7 +267,7 @@ class MultiHeadAttention(nn.Module):
         scores = q @ k.transpose(-2, -1)
         # [B, H, T, D] @ [B, H, D, T] -> [B, H, T, T]
 
-        scores = scores * self.head_size ** 0.5
+        scores = scores * self.head_size ** -0.5
 
         mask = self.causal_mask[:T, :T]
         # [T, T]
@@ -367,6 +367,7 @@ class FeedForward(nn.Module):
         hidden = gate * up
 
         out = self.down_proj(hidden)
+        out = self.dropout(out)
 
         return out
 
