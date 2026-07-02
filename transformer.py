@@ -21,10 +21,10 @@ d_model = 64
 num_heads = 4
 num_layers = 2
 d_ff = 4 * d_model
-dropout = 0.1
+dropout = 0
 
 batch_size = 64
-learning_rate = 3e-4
+learning_rate = 1e-3
 max_iters = 3000
 
 device = torch.device(
