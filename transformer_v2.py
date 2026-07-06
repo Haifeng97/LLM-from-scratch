@@ -378,8 +378,10 @@ class MultiHeadAttention(nn.Module):
                     T_kv,
                     dtype=torch.bool,
                     device=scores.device,
-                )
+                ),
+                # diagonal=-1
             )
+            # causal_mask[0][0] = 1 # 也不是不行
             # [T_q,T_kv]
 
             causal_mask = causal_mask[
